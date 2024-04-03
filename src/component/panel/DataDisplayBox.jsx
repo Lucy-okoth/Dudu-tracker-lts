@@ -15,7 +15,7 @@ const DataDisplayBox = ({ uploadedCovariance }) => {
   const filteredUploadedCovariance = sortedUploadedCovariance.filter(covariance => covariance.fileType);
 
   return (
-    <Box p={2} mt={3} bgcolor="grey.100" borderRadius={2}>
+    <Box p={2} mt={3} bgcolor="grey.90" borderRadius={2}>
       <Typography variant="h6" gutterBottom>
         Data Overview
       </Typography>
