@@ -15,7 +15,7 @@ const RuleForm = ({
       <Typography fontWeight="bold">
         {uploadedInfo.fileType} - {uploadedInfo.file.filename}
       </Typography>
-      <Grid container columnGap={4}>
+      <Grid container columnGap={3}>
         <Grid item xs={12} md={4}>
           <TextField variant="outlined" label="Min" type="number" />
         </Grid>
