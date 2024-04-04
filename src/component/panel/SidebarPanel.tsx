@@ -148,6 +148,9 @@ const SidebarPanel = ({
            gridGap: 10,
          }}
        >
+
+
+
          <FormControl fullWidth>
            <InputLabel id="fileType">Type</InputLabel>
            <Select
@@ -194,6 +197,7 @@ const SidebarPanel = ({
          <FormGroup>
            <FormControlLabel label="AND" control={<Checkbox />} />
            <FormControlLabel label="OR" control={<Checkbox />} />
+           <FormControlLabel label="If...then" control={<Checkbox />} />
          </FormGroup>
        </Box>
 
