@@ -127,18 +127,18 @@ const SidebarPanel = ({
          Configuration Panel
        </Typography>
        <Divider />
-       {/* <FormControl>
-         <FormLabel htmlFor="csv">CSV File</FormLabel>
+       <FormControl>
+         <FormLabel htmlFor="csv">Upload Files</FormLabel>
          <FilePond
            id="csv"
            files={selectedCsv}
            onupdatefiles={setSelectedCsv}
-           labelIdle='Drag & Drop or <span class="filepond--label-action">Browse</span>'
+           labelIdle='(csv  excel  tiff) <span class="filepond--label-action"> Browse</span>'
            credits={false}
            instantUpload={false}
            allowRevert={false}
          />
-       </FormControl> */}
+       </FormControl>
 
 
        <Box
@@ -157,9 +157,9 @@ const SidebarPanel = ({
              value={fileType}
              onChange={(e) => setFileType(e.target.value)}
            >
-             <MenuItem value="Temperature">Temperature</MenuItem>
+             {/* <MenuItem value="Temperature">Temperature</MenuItem>
              <MenuItem value="NDVI">NDVI</MenuItem>
-             <MenuItem value="Precipitation">Precipitation</MenuItem>
+             <MenuItem value="Precipitation">Precipitation</MenuItem> */}
            </Select>
          </FormControl>
          <FormControl fullWidth>
@@ -277,11 +277,3 @@ const SidebarPanel = ({
  );
 };
 export default SidebarPanel;
-
-
-
-
-
-
-
-
