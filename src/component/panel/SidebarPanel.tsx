@@ -1,5 +1,6 @@
 "use client";
 import {
+  Autocomplete,
   Box,
   Button,
   Checkbox,
@@ -10,17 +11,13 @@ import {
   FormGroup,
   FormLabel,
   Grid,
-  IconButton,
-  InputLabel,
-  List,
-  ListItem,
+  Menu,
   MenuItem,
-  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import { FilePond } from "react-filepond";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 // Import FilePond styles
 import "filepond/dist/filepond.min.css";
 import { Save, Delete as DeleteIcon } from "@mui/icons-material";
@@ -43,12 +40,12 @@ const SidebarPanel = ({
   toggleSidePanel: () => void;
 }) => {
   const [selectedCsv, setSelectedCsv] = useState<any>([]);
+  const [selectedFileTypes, setSelectedFileTypes] = useState<string[]>([]);
   const [fileType, setFileType] = useState<string>("");
   const [covariance, setCovariance] = useState<any>([]);
   const [uploadedCovariance, setUploadedCovariance] = useState<
     UploadedFileInfo[]
   >([]);
-  const [affectedArea, setAffectedArea] = useState<any[]>([]);
   // will move the selected file and it's info to uploadedState
   const handleUploadCovarianceInfo = () => {
     const file: FilePondFile = covariance[0];
@@ -61,35 +58,12 @@ const SidebarPanel = ({
     setFileType("");
     setCovariance([]);
   };
-  // supposed to delete any uploaded covariance info -> (to fix -> deleting but not refreshing after state is updated)
-  const handleDeleteUploaded = (index: number) => {
-    setUploadedCovariance((prevState) => {
-      const newState = [...prevState];
-      newState.splice(index, 1);
-      return newState;
-    });
-    //console.log("Delete at index ", index);
-    //const tempUpload = uploadedCovariance;
-    //tempUpload.splice(index, 1);
-    //setUploadedCovariance(tempUpload);
+
+  const handleFileTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFileType(e.target.value);
+    setSelectedFileTypes((prev) => [...prev, e.target.value]);
   };
-  // Generates list info for uploaded covariance
-  const selectedCovarianceList = uploadedCovariance.map((covariance, index) => (
-    <ListItem
-      key={index}
-      secondaryAction={
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          onClick={() => handleDeleteUploaded(index)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      }
-    >
-      {covariance.fileType} - {covariance.file.filename}
-    </ListItem>
-  ));
+
   const rulesInputForm = uploadedCovariance.map((covariance, index) => (
     <RuleForm
       key={index}
@@ -127,25 +101,27 @@ const SidebarPanel = ({
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gridGap: 10,
           }}
         >
-          <FormControl fullWidth>
-            <InputLabel htmlFor="fileType"></InputLabel>
-            <TextField
-              label="Type"
-              id="fileType"
-              value={fileType}
-              onChange={(e) => setFileType(e.target.value)}
-            >
-              {/* <MenuItem value="Temperature">Temperature</MenuItem>
-             <MenuItem value="NDVI">NDVI</MenuItem>
-             <MenuItem value="Precipitation">Precipitation</MenuItem> */}
-              /
-            </TextField>
-          </FormControl>
-          <FormControl fullWidth></FormControl>
+          <Autocomplete
+            freeSolo
+            disablePortal
+            options={() =>
+              uploadedCovariance.map((covariance) => covariance.fileTypes)
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="File Type"
+                value={fileType}
+                onChange={handleFileTypeChange}
+              />
+            )}
+            limitTags={2}
+            id="file-types"
+          />
           <Box display="flex" justifyContent="end" alignItems="center">
             <Button
               variant="contained"
@@ -161,7 +137,7 @@ const SidebarPanel = ({
         <DataDisplayBox uploadedCovariance={uploadedCovariance} />
         <Divider />
         <Divider />
-        <List>{selectedCovarianceList}</List>
+        {/* <List>{selectedCovarianceList}</List> */}
         <Box>{rulesInputForm}</Box>
         <Box>
           <FormGroup>
@@ -249,9 +225,3 @@ const SidebarPanel = ({
   );
 };
 export default SidebarPanel;
-
-
-
-
-
-
