@@ -105,23 +105,21 @@ const SidebarPanel = ({
             gridGap: 10,
           }}
         >
-          <Autocomplete
-            freeSolo
-            disablePortal
-            options={() =>
-              uploadedCovariance.map((covariance) => covariance.fileTypes)
-            }
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="File Type"
-                value={fileType}
-                onChange={handleFileTypeChange}
-              />
-            )}
-            limitTags={2}
-            id="file-types"
-          />
+   <Autocomplete
+  freeSolo
+  disablePortal
+  options={uploadedCovariance.flatMap((covariance) => covariance.fileType)}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="File Type"
+      value={fileType}
+      onChange={handleFileTypeChange}
+    />
+  )}
+  limitTags={2}
+  id="file-types"
+/>
           <Box display="flex" justifyContent="end" alignItems="center">
             <Button
               variant="contained"
